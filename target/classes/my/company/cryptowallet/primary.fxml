@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="25" styleClass="login-container" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="my.company.cryptowallet.PrimaryController"
+      stylesheets="@styles.css">
+   
+   <VBox alignment="CENTER" spacing="20" styleClass="login-box" maxWidth="400">
+      
+      <Label text="Crypto Wallet" styleClass="login-title" />
+      <Label text="Sistema de Carteira de Criptomoedas" styleClass="login-subtitle" />
+      
+      <TextField fx:id="txtUsername" promptText="Nome de usuario" prefWidth="300" />
+      <PasswordField fx:id="txtSenha" promptText="Senha" prefWidth="300" />
+      
+      <Button text="ENTRAR" onAction="#handleLogin" prefWidth="300" styleClass="btn-login" />
+      
+      <Label text="Usuario padrao: admin / Senha: 1234" styleClass="login-subtitle" />
+      
+   </VBox>
+   
+</VBox>

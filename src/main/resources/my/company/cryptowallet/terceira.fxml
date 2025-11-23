@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="my.company.cryptowallet.TerceiraController"
+      stylesheets="@styles.css">
+   
+   <HBox alignment="CENTER_LEFT" spacing="20">
+      <Label text="🎯 Gestao de Carteira" styleClass="title-label" />
+      <Region HBox.hgrow="ALWAYS" />
+      <Button text="Voltar ao Dashboard" onAction="#handleVoltar" styleClass="button" />
+   </HBox>
+   
+   <Label text="📈 Resumo da Carteira" styleClass="section-label" />
+   
+   <VBox spacing="10" style="-fx-background-color: #1e2230; -fx-padding: 20; -fx-background-radius: 12;">
+      <Label fx:id="lblResumo" text="Carregando informacoes..." wrapText="true" />
+   </VBox>
+   
+   <Label text="🪙 Criptomoedas Disponiveis" styleClass="section-label" />
+   
+   <ListView fx:id="lstCriptomoedas" prefHeight="200" />
+   
+   <Button text="Carregar Informacoes" onAction="#handleCarregarInfo" 
+           styleClass="button, btn-update" prefWidth="200" />
+   
+</VBox>

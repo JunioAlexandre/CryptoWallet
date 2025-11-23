@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="my.company.cryptowallet.SecondaryController"
+      stylesheets="@styles.css">
+   
+   <Label text="Crypto Wallet Dashboard" styleClass="title-label" />
+   
+   <HBox spacing="10">
+      <Label fx:id="lblUsuario" styleClass="user-label" />
+      <Button text="Atualizar" onAction="#handleAtualizarPrecos" styleClass="btn-update" />
+      <Button text="Gestao" onAction="#handleAbrirGestao" styleClass="btn-manage" />
+      <Button text="Sair" onAction="#handleSair" styleClass="btn-exit" />
+   </HBox>
+   
+   <Label text="Precos Atuais" styleClass="section-label" />
+   
+   <HBox spacing="15">
+      <VBox spacing="5" styleClass="crypto-card-btc">
+         <Label text="Bitcoin (BTC)" />
+         <Label fx:id="lblPrecoBTC" styleClass="crypto-price" />
+         <Label fx:id="lblSaldoBTC" styleClass="crypto-balance" />
+      </VBox>
+      
+      <VBox spacing="5" styleClass="crypto-card-eth">
+         <Label text="Ethereum (ETH)" />
+         <Label fx:id="lblPrecoETH" styleClass="crypto-price" />
+         <Label fx:id="lblSaldoETH" styleClass="crypto-balance" />
+      </VBox>
+   </HBox>
+   
+   <Label text="Nova Transacao" styleClass="section-label" />
+   
+   <HBox spacing="10">
+      <ComboBox fx:id="cmbTipo" />
+      <ComboBox fx:id="cmbCripto" />
+      <TextField fx:id="txtQuantidade" />
+      <TextField fx:id="txtPreco" />
+      <Button text="Registrar" onAction="#handleRegistrarTransacao" styleClass="btn-register" />
+   </HBox>
+   
+   <Label text="Historico de Transacoes" styleClass="section-label" />
+   
+   <TableView fx:id="tblTransacoes">
+      <columns>
+         <TableColumn fx:id="colData" text="Data/Hora" prefWidth="120" />
+         <TableColumn fx:id="colTipo" text="Tipo" prefWidth="80" />
+         <TableColumn fx:id="colCripto" text="Cripto" prefWidth="80" />
+         <TableColumn fx:id="colQuantidade" text="Quantidade" prefWidth="100" />
+         <TableColumn fx:id="colPreco" text="Preco Unit." prefWidth="100" />
+         <TableColumn fx:id="colTotal" text="Total" prefWidth="100" />
+      </columns>
+   </TableView>
+   
+</VBox>

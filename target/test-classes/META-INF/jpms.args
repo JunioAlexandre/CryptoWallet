@@ -1,0 +1,4 @@
+--patch-module
+my.company.cryptowallet=_
+--add-reads
+my.company.cryptowallet=ALL-UNNAMED
