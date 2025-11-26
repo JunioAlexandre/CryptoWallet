@@ -16,7 +16,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 /**
  * Controller da Tela Principal/Dashboard (secondary.fxml)
@@ -84,22 +87,103 @@ public class SecondaryController {
             calcularPrecoAutomatico();
         });
         
-        // Configura as colunas da TableView
-        colData.setCellValueFactory(cellData -> 
-            new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDataFormatada()));
-        colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        colCripto.setCellValueFactory(new PropertyValueFactory<>("criptomoeda"));
-        colQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-        colPreco.setCellValueFactory(new PropertyValueFactory<>("precoUnitario"));
-        colTotal.setCellValueFactory(cellData -> 
-            new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getValorTotal()).asObject());
+        // ===== CONFIGURAÇÃO DAS COLUNAS - VERSÃO CORRIGIDA =====
+        
+        // Coluna Data - usando o método getDataFormatada()
+        colData.setCellValueFactory(cellData -> {
+            String dataFormatada = cellData.getValue().getDataFormatada();
+            System.out.println("Data formatada: " + dataFormatada);
+            return new SimpleStringProperty(dataFormatada);
+        });
+        
+        // Coluna Tipo - usando getTipo()
+        colTipo.setCellValueFactory(cellData -> {
+            String tipo = cellData.getValue().getTipo();
+            System.out.println("Tipo: " + tipo);
+            return new SimpleStringProperty(tipo);
+        });
+        
+        // Coluna Cripto - usando getCriptomoeda()
+        colCripto.setCellValueFactory(cellData -> {
+            String cripto = cellData.getValue().getCriptomoeda();
+            System.out.println("Criptomoeda: " + cripto);
+            return new SimpleStringProperty(cripto);
+        });
+        
+        // Coluna Quantidade - usando getQuantidade()
+        colQuantidade.setCellValueFactory(cellData -> {
+            Double quantidade = cellData.getValue().getQuantidade();
+            System.out.println("Quantidade: " + quantidade);
+            return new SimpleDoubleProperty(quantidade).asObject();
+        });
+        
+        // Coluna Preço - usando getPrecoUnitario()
+        colPreco.setCellValueFactory(cellData -> {
+            Double preco = cellData.getValue().getPrecoUnitario();
+            System.out.println("Preco Unitario: " + preco);
+            return new SimpleDoubleProperty(preco).asObject();
+        });
+        
+        // Coluna Total - usando getValorTotal()
+        colTotal.setCellValueFactory(cellData -> {
+            Double total = cellData.getValue().getValorTotal();
+            System.out.println("Total: " + total);
+            return new SimpleDoubleProperty(total).asObject();
+        });
+        
+        // Formatadores de células
+        colQuantidade.setCellFactory(col -> new TableCell<Transacao, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.8f", item));
+                }
+            }
+        });
+        
+        colPreco.setCellFactory(col -> new TableCell<Transacao, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("$ %.2f", item));
+                }
+            }
+        });
+        
+        colTotal.setCellFactory(col -> new TableCell<Transacao, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("$ %.2f", item));
+                }
+            }
+        });
         
         // Inicializa a lista observável
         transacoesObservable = FXCollections.observableArrayList();
         tblTransacoes.setItems(transacoesObservable);
         
+        // Carrega transações existentes
+        carregarTransacoes();
+        
         // Carrega preços iniciais
         handleAtualizarPrecos();
+    }
+    
+    /**
+     * Carrega as transações do serviço para a tabela
+     */
+    private void carregarTransacoes() {
+        transacoesObservable.setAll(criptoService.listarTransacoes());
     }
     
     /**
@@ -205,6 +289,10 @@ public class SecondaryController {
             // Obtém a quantidade
             double quantidade = Double.parseDouble(txtQuantidade.getText());
             
+            if (quantidade <= 0) {
+                throw new RegraNegocioException("A quantidade deve ser maior que zero!");
+            }
+            
             // Obtém o preço unitário correto
             double precoUnitario = 0.0;
             String cripto = cmbCripto.getValue();
@@ -213,6 +301,11 @@ public class SecondaryController {
                 precoUnitario = precoAtualBTC;
             } else if (cripto.equals("ETH")) {
                 precoUnitario = precoAtualETH;
+            }
+            
+            // Verifica se o preço foi carregado
+            if (precoUnitario == 0.0) {
+                throw new RegraNegocioException("Precos nao carregados. Clique em 'Atualizar' primeiro!");
             }
             
             // Cria a transação com o preço unitário correto
@@ -226,7 +319,7 @@ public class SecondaryController {
             criptoService.registrarTransacao(transacao);
             
             // Atualiza a tabela (Collections)
-            transacoesObservable.setAll(criptoService.listarTransacoes());
+            carregarTransacoes();
             
             // Atualiza saldos
             atualizarSaldos();
@@ -240,7 +333,7 @@ public class SecondaryController {
         } catch (NumberFormatException e) {
             // Tratamento de erro de conversão
             exibirAlerta(Alert.AlertType.ERROR, "Erro", 
-                "Quantidade e Preco devem ser numeros validos!");
+                "Quantidade deve ser um numero valido!");
         } catch (RegraNegocioException e) {
             // Tratamento da exceção customizada
             exibirAlerta(Alert.AlertType.ERROR, "Erro de Validacao", e.getMessage());
@@ -268,8 +361,8 @@ public class SecondaryController {
         double saldoBTC = criptoService.calcularSaldo("BTC");
         double saldoETH = criptoService.calcularSaldo("ETH");
         
-        lblSaldoBTC.setText(String.format("Saldo: %.4f BTC", saldoBTC));
-        lblSaldoETH.setText(String.format("Saldo: %.4f ETH", saldoETH));
+        lblSaldoBTC.setText(String.format("Saldo: %.8f BTC", saldoBTC));
+        lblSaldoETH.setText(String.format("Saldo: %.8f ETH", saldoETH));
     }
     
     /**

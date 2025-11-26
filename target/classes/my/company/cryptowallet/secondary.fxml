@@ -45,14 +45,14 @@
    <Label text="Historico de Transacoes" styleClass="section-label" />
    
    <TableView fx:id="tblTransacoes">
-      <columns>
-         <TableColumn fx:id="colData" text="Data/Hora" prefWidth="120" />
-         <TableColumn fx:id="colTipo" text="Tipo" prefWidth="80" />
-         <TableColumn fx:id="colCripto" text="Cripto" prefWidth="80" />
-         <TableColumn fx:id="colQuantidade" text="Quantidade" prefWidth="100" />
-         <TableColumn fx:id="colPreco" text="Preco Unit." prefWidth="100" />
-         <TableColumn fx:id="colTotal" text="Total" prefWidth="100" />
-      </columns>
-   </TableView>
+   <columns>
+      <TableColumn fx:id="colData" text="Data/Hora" prefWidth="120" />
+      <TableColumn fx:id="colTipo" text="Tipo" prefWidth="80" />
+      <TableColumn fx:id="colCripto" text="Cripto" prefWidth="80" />
+      <TableColumn fx:id="colQuantidade" text="Quantidade" prefWidth="100" />
+      <TableColumn fx:id="colPreco" text="Preco Unit." prefWidth="100" />
+      <TableColumn fx:id="colTotal" text="Total" prefWidth="100" />
+   </columns>
+</TableView>
    
 </VBox>
