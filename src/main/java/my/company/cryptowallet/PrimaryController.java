@@ -11,6 +11,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
+ *
+ * @author junio
+ */
+/**
  * Controller da Tela de Login (primary.fxml)
  * Demonstra: Controller + FXML + Navegação + Tratamento de Exceções
  */
@@ -29,6 +33,7 @@ public class PrimaryController {
      */
     @FXML
     public void initialize() {
+        
         // Inicializa o serviço (Separação de Camadas)
         autenticacaoService = new AutenticacaoService();
     }
@@ -40,6 +45,7 @@ public class PrimaryController {
     @FXML
     private void handleLogin() {
         try {
+            
             // Obtém os dados do formulário
             String username = txtUsername.getText();
             String senha = txtSenha.getText();
@@ -58,12 +64,15 @@ public class PrimaryController {
             navegarParaSecondary();
             
         } catch (RegraNegocioException e) {
+            
             // Tratamento da exceção customizada
             exibirAlerta(Alert.AlertType.ERROR, "Erro de Login", e.getMessage());
         } catch (NumberFormatException e) {
+            
             // Tratamento de erro de conversão
             exibirAlerta(Alert.AlertType.ERROR, "Erro", "Formato de dados inválido!");
         } catch (Exception e) {
+            
             // Tratamento genérico
             exibirAlerta(Alert.AlertType.ERROR, "Erro Inesperado", 
                 "Ocorreu um erro: " + e.getMessage());

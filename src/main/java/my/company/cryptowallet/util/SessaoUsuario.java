@@ -2,62 +2,71 @@ package my.company.cryptowallet.util;
 
 import my.company.cryptowallet.model.Usuario;
 
-
 /**
  *
  * @author junio
  */
 /**
  * Singleton para gerenciar a sessão do usuário logado
- * Demonstra: Padrão Singleton (Requisito Opcional/Bônus)
  */
 public class SessaoUsuario {
     private static SessaoUsuario instancia;
     private Usuario usuarioLogado;
-    
+    private String criptoSelecionada;
+    private double precoCompra;
+    private long precoCompraTimestamp; // milissegundos desde epoch
+
     // Construtor privado (Singleton)
-    private SessaoUsuario() {
-    }
-    
-    /**
-     * Obtém a instância única da sessão
-     * @return Instância de SessaoUsuario
-     */
+    private SessaoUsuario() { }
+
     public static SessaoUsuario getInstance() {
         if (instancia == null) {
             instancia = new SessaoUsuario();
         }
         return instancia;
     }
-    
-    /**
-     * Define o usuário logado
-     * @param usuario Usuário que fez login
-     */
+
     public void setUsuarioLogado(Usuario usuario) {
         this.usuarioLogado = usuario;
     }
-    
-    /**
-     * Obtém o usuário logado
-     * @return Usuário logado ou null
-     */
+
     public Usuario getUsuarioLogado() {
         return usuarioLogado;
     }
-    
-    /**
-     * Verifica se há um usuário logado
-     * @return true se houver usuário logado
-     */
+
     public boolean isLogado() {
         return usuarioLogado != null;
     }
-    
-    /**
-     * Encerra a sessão (logout)
-     */
+
     public void logout() {
         this.usuarioLogado = null;
+        this.criptoSelecionada = null;
+        this.precoCompra = 0.0;
+        this.precoCompraTimestamp = 0L;
+    }
+
+    
+    public void setCriptoSelecionada(String cripto) {
+        this.criptoSelecionada = cripto;
+    }
+
+    public String getCriptoSelecionada() {
+        return criptoSelecionada;
+    }
+
+    public void setPrecoCompra(double preco) {
+        this.precoCompra = preco;
+    }
+
+    public double getPrecoCompra() {
+        return precoCompra;
+    }
+
+    public void setPrecoCompraTimestamp(long timestampMillis) {
+        this.precoCompraTimestamp = timestampMillis;
+    }
+
+    public long getPrecoCompraTimestamp() {
+        return precoCompraTimestamp;
     }
 }
