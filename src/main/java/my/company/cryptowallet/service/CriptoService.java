@@ -22,7 +22,7 @@ import org.json.JSONObject;
  */
 public class CriptoService {
 
-    private List<Transacao> transacoes;
+    private List<Transacao> transacoes; //List para gerenciar transações
     private static final String API_URL = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd";
 
     public CriptoService() {
@@ -35,6 +35,7 @@ public class CriptoService {
      * @return Array com Bitcoin e Ethereum atualizados
      * @throws RegraNegocioException Se houver erro na API
      */
+    //parte de criptoservice
     public Criptomoeda[] buscarPrecosAtualizados() throws RegraNegocioException {
         try {
             URL url = new URL(API_URL);
@@ -59,11 +60,15 @@ public class CriptoService {
 
             // Parsear JSON
             JSONObject json = new JSONObject(response.toString());
-
+            
+            //usando o Factory
             Criptomoeda btc = CriptomoedaFactory.criarCriptomoeda("BTC");
+            
             btc.setPrecoAtual(json.getJSONObject("bitcoin").getDouble("usd"));
 
+            //Usando o Factory
             Criptomoeda eth = CriptomoedaFactory.criarCriptomoeda("ETH");
+            
             eth.setPrecoAtual(json.getJSONObject("ethereum").getDouble("usd"));
 
             return new Criptomoeda[]{btc, eth};
@@ -79,6 +84,7 @@ public class CriptoService {
      * @param transacao Transação a ser registrada
      * @throws RegraNegocioException Se dados inválidos
      */
+    //parte do CriptoService
     public void registrarTransacao(Transacao transacao) throws RegraNegocioException {
         // Validações
         if (transacao == null) {

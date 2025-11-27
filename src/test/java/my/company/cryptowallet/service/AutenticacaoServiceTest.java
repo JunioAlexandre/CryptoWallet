@@ -32,6 +32,7 @@ public class AutenticacaoServiceTest {
      * Teste: Autenticação com credenciais válidas
      * Demonstra: assertEquals
      */
+    
     @Test
     @DisplayName("Deve autenticar usuário com credenciais válidas")
     public void testAutenticacaoComCredenciaisValidas() throws RegraNegocioException {

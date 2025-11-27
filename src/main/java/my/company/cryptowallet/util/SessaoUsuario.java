@@ -4,21 +4,23 @@ import my.company.cryptowallet.model.Usuario;
 
 /**
  *
- * @author junio
+    * @author junio
  */
 /**
  * Singleton para gerenciar a sessão do usuário logado
  */
+
 public class SessaoUsuario {
-    private static SessaoUsuario instancia;
+    private static SessaoUsuario instancia; //Instancia unica
     private Usuario usuarioLogado;
     private String criptoSelecionada;
     private double precoCompra;
-    private long precoCompraTimestamp; // milissegundos desde epoch
+    private long precoCompraTimestamp; 
 
     // Construtor privado (Singleton)
     private SessaoUsuario() { }
 
+    //Método getInstance (padrão Singleton)
     public static SessaoUsuario getInstance() {
         if (instancia == null) {
             instancia = new SessaoUsuario();

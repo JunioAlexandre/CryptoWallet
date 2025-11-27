@@ -42,6 +42,8 @@ public class PrimaryController {
      * Manipulador de eventos - Botão Login
      * Demonstra: Manipulação de Eventos + Tratamento de Exceções
      */
+    
+    // Evento de clique no botão Login
     @FXML
     private void handleLogin() {
         try {
@@ -51,6 +53,7 @@ public class PrimaryController {
             String senha = txtSenha.getText();
             
             // Chama o Service (Separação de Camadas)
+            //Delega pra service
             Usuario usuario = autenticacaoService.autenticar(username, senha);
             
             // Armazena na sessão (Singleton)
@@ -83,6 +86,8 @@ public class PrimaryController {
      * Navega para a tela secundária (Dashboard)
      * Demonstra: Navegação entre telas
      */
+    
+    //Navegar login -> Dashboard
     private void navegarParaSecondary() throws IOException {
         App.setRoot("secondary");
     }

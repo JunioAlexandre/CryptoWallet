@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class AutenticacaoService {
 
-    private List<Usuario> usuarios;
+    private List<Usuario> usuarios; //List para gerenciar usuários
 
     public AutenticacaoService() {
         this.usuarios = new ArrayList<>();
@@ -38,6 +38,8 @@ public class AutenticacaoService {
      * @return Usuario autenticado
      * @throws RegraNegocioException Se credenciais inválidas
      */
+    
+    //Parte do service...
     public Usuario autenticar(String username, String senha) throws RegraNegocioException {
         // Validações
         if (username == null || username.trim().isEmpty()) {

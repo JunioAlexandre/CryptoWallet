@@ -45,7 +45,9 @@ public class SecondaryController {
     @FXML private TableColumn<Transacao,Double> colTotal;
 
     private CriptoService criptoService;
-    private ObservableList<Transacao> transacoesObservable;
+    
+    // ✅ ObservableList para TableView
+    private ObservableList<Transacao> transacoesObservable; 
 
     // Preços carregados
     private double precoAtualBTC = 0.0;
@@ -64,7 +66,10 @@ public class SecondaryController {
         }
 
         // Preenche ComboBoxes
+        
+        //ComboBox populado
         cmbTipo.setItems(FXCollections.observableArrayList("COMPRA", "VENDA"));
+        //ComboBox populado
         cmbCripto.setItems(FXCollections.observableArrayList("BTC", "ETH"));
 
         cmbTipo.setPromptText("Tipo");
@@ -134,7 +139,9 @@ public class SecondaryController {
             txtPreco.clear();
         }
     }
-
+    
+    //Evento botão Atualizar
+    //Delega para service
     @FXML
     private void handleAtualizarPrecos() {
         try {
@@ -149,13 +156,15 @@ public class SecondaryController {
                 atualizarSaldos();
                 calcularPrecoAutomatico();
             });
-
+            
+          //Alerta de aviso
         } catch (RegraNegocioException e) {
             exibirAlerta(Alert.AlertType.WARNING,"Aviso",
                     "Não foi possível atualizar os preços: " + e.getMessage());
         }
     }
 
+    //Evento botão Registrar
     @FXML
     private void handleRegistrarTransacao() {
         try {
@@ -194,6 +203,7 @@ public class SecondaryController {
             atualizarSaldos();
             limparCampos();
 
+            //Alerta de sucesso
             exibirAlerta(Alert.AlertType.INFORMATION,"Sucesso",
                     "Transação registrada com sucesso!");
 
@@ -204,6 +214,7 @@ public class SecondaryController {
         }
     }
 
+    //Navegar ãDashboard -> Gestão
     @FXML
     private void handleAbrirGestao() {
         try {
@@ -214,7 +225,7 @@ public class SecondaryController {
         }
     }
 
-    private void atualizarSaldos() {
+    private void atualizarSaldoãs() {
         lblSaldoBTC.setText(String.format("Saldo: %.8f BTC", criptoService.calcularSaldo("BTC")));
         lblSaldoETH.setText(String.format("Saldo: %.8f ETH", criptoService.calcularSaldo("ETH")));
     }
@@ -225,7 +236,8 @@ public class SecondaryController {
         txtQuantidade.clear();
         txtPreco.clear();
     }
-
+    
+    //Navegar Dashboard -> Login e sair
     @FXML
     private void handleSair() throws IOException {
         SessaoUsuario.getInstance().logout();
@@ -238,5 +250,9 @@ public class SecondaryController {
         a.setHeaderText(null);
         a.setContentText(mensagem);
         a.showAndWait();
+    }
+
+    private void atualizarSaldos() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

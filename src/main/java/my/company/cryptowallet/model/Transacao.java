@@ -14,8 +14,8 @@ import java.time.format.DateTimeFormatter;
  * Demonstra: POO com Encapsulamento
  */
 public class Transacao {
-    private String tipo; // "COMPRA" ou "VENDA"
-    private String criptomoeda; // "BTC" ou "ETH"
+    private String tipo; 
+    private String criptomoeda; 
     private double quantidade;
     private double precoUnitario;
     private LocalDateTime dataHora;

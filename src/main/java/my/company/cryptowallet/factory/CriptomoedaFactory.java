@@ -20,6 +20,8 @@ public class CriptomoedaFactory {
      * @return Instância de Bitcoin ou Ethereum
      * @throws IllegalArgumentException se o símbolo for inválido
      */
+    
+    //Metodo Factory
     public static Criptomoeda criarCriptomoeda(String simbolo) {
         if (simbolo == null) {
             throw new IllegalArgumentException("Símbolo não pode ser nulo");

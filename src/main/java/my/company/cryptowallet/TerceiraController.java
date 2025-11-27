@@ -24,6 +24,8 @@ import javafx.scene.control.ListView;
 public class TerceiraController {
 
     @FXML private Label lblResumo;
+    
+    //ListView
     @FXML private ListView<String> lstCriptomoedas;
 
     // LineChart e eixos declarados no FXML
@@ -54,7 +56,8 @@ public class TerceiraController {
 
         StringBuilder resumo = new StringBuilder();
         resumo.append("Total de Criptomoedas Suportadas: ").append(criptos.length).append("\n\n");
-
+        
+        //Populando dinamicamente
         ObservableList<String> items = FXCollections.observableArrayList();
         for (Criptomoeda cripto : criptos) {
             items.add(cripto.getSimbolo() + " - " + cripto.getNome());
@@ -119,12 +122,15 @@ public class TerceiraController {
     /**
      * Ação do botão "Carregar Informacoes" — força atualização do gráfico e lista
      */
+    
+    //Evento botão carregar
     @FXML
     private void handleCarregarInfo() {
         carregarListaCriptomoedas();
         carregarGraficoEvolucao();
     }
 
+    //Navegar Gestão -> Dashboard e voltar
     @FXML
     private void handleVoltar() throws IOException {
         App.setRoot("secondary");
